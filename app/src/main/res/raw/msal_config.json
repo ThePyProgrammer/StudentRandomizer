@@ -1,0 +1,15 @@
+{
+  "client_id" : "796388c2-84dd-4db5-ae35-130821e79c13",
+  "redirect_uri" : "msauth://com.thepyprogrammer.randstudent/callback",
+  "broker_redirect_uri_registered": false,
+  "account_mode": "SINGLE",
+  "authorities" : [
+    {
+      "type": "AAD",
+      "audience": {
+        "type": "AzureADandPersonalMicrosoftAccount"
+      },
+      "default": true
+    }
+  ]
+}
