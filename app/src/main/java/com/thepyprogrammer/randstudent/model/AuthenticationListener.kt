@@ -19,7 +19,7 @@ class AuthenticationHelper private constructor(
     listener: IAuthenticationHelperCreatedListener
 ) {
     private var mPCA: ISingleAccountPublicClientApplication? = null
-    private val mScopes = arrayOf("User.Read", "MailboxSettings.Read", "Calendars.ReadWrite")
+    private val mScopes = arrayOf("User.Read")
     fun acquireTokenInteractively(activity: Activity?, callback: AuthenticationCallback?) {
         mPCA!!.signIn(activity!!, null, mScopes, callback!!)
     }
@@ -53,14 +53,6 @@ class AuthenticationHelper private constructor(
             }
         }
 
-        // Version called from fragments. Does not create an
-        // instance if one doesn't exist
-        @get:Synchronized
-        val instance: AuthenticationHelper?
-            get() {
-                checkNotNull(INSTANCE) { "AuthenticationHelper has not been initialized from MainActivity" }
-                return INSTANCE
-            }
     }
 
     init {
