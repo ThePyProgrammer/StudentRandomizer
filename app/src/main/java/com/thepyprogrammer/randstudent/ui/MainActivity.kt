@@ -53,8 +53,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         // Add the hamburger menu icon
         val toggle = ActionBarDrawerToggle(
-            this, mDrawer, toolbar,
-            R.string.navigation_drawer_open, R.string.navigation_drawer_close
+                this, mDrawer, toolbar,
+                R.string.navigation_drawer_open, R.string.navigation_drawer_close
         )
         mDrawer?.addDrawerListener(toggle)
         toggle.syncState()
@@ -81,21 +81,21 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 // Get the authentication helper
 // Get the authentication helper
         AuthenticationHelper.getInstance(
-            applicationContext,
-            object : IAuthenticationHelperCreatedListener {
-                override fun onCreated(authHelper: AuthenticationHelper?) {
-                    mAuthHelper = authHelper
-                    if (!mIsSignedIn) {
-                        doSilentSignIn(false)
-                    } else {
-                        hideProgressBar()
+                applicationContext,
+                object : IAuthenticationHelperCreatedListener {
+                    override fun onCreated(authHelper: AuthenticationHelper?) {
+                        mAuthHelper = authHelper
+                        if (!mIsSignedIn) {
+                            doSilentSignIn(false)
+                        } else {
+                            hideProgressBar()
+                        }
                     }
-                }
 
-                override fun onError(exception: MsalException?) {
-                    Log.e("AUTH", "Error creating auth helper", exception)
-                }
-            })
+                    override fun onError(exception: MsalException?) {
+                        Log.e("AUTH", "Error creating auth helper", exception)
+                    }
+                })
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -169,8 +169,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     fun openHomeFragment(userName: String?) {
         val fragment = HomeFragment.createInstance(userName)
         supportFragmentManager.beginTransaction()
-            .replace(R.id.fragment_container, fragment)
-            .commit()
+                .replace(R.id.fragment_container, fragment)
+                .commit()
         mNavigationView?.setCheckedItem(R.id.nav_home)
     }
 
@@ -202,78 +202,78 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     // Handles the authentication result
     private fun getAuthCallback() =
-        object : AuthenticationCallback {
-            override fun onSuccess(authenticationResult: IAuthenticationResult) {
-                // Log the token for debug purposes
-                // Log the token for debug purposes
-                val accessToken = authenticationResult.accessToken
-                Log.d("AUTH", String.format("Access token: %s", accessToken))
+            object : AuthenticationCallback {
+                override fun onSuccess(authenticationResult: IAuthenticationResult) {
+                    // Log the token for debug purposes
+                    // Log the token for debug purposes
+                    val accessToken = authenticationResult.accessToken
+                    Log.d("AUTH", String.format("Access token: %s", accessToken))
 
-                // Get Graph client and get user
+                    // Get Graph client and get user
 
-                // Get Graph client and get user
-                val graphHelper: GraphHelper = GraphHelper.instance
-                graphHelper.getUser(accessToken, getUserCallback())
-            }
+                    // Get Graph client and get user
+                    val graphHelper: GraphHelper = GraphHelper.instance
+                    graphHelper.getUser(accessToken, getUserCallback())
+                }
 
-            override fun onError(exception: MsalException) {
-                // Check the type of exception and handle appropriately
-                if (exception is MsalUiRequiredException) {
-                    Log.d("AUTH", "Interactive login required")
-                    if (mAttemptInteractiveSignIn) {
-                        doInteractiveSignIn()
-                    }
-                } else if (exception is MsalClientException) {
-                    if (exception.getErrorCode() === "no_current_account" ||
-                        exception.getErrorCode() === "no_account_found"
-                    ) {
-                        Log.d("AUTH", "No current account, interactive login required")
+                override fun onError(exception: MsalException) {
+                    // Check the type of exception and handle appropriately
+                    if (exception is MsalUiRequiredException) {
+                        Log.d("AUTH", "Interactive login required")
                         if (mAttemptInteractiveSignIn) {
                             doInteractiveSignIn()
                         }
-                    } else {
-                        // Exception inside MSAL, more info inside MsalError.java
-                        Log.e("AUTH", "Client error authenticating", exception)
+                    } else if (exception is MsalClientException) {
+                        if (exception.getErrorCode() === "no_current_account" ||
+                                exception.getErrorCode() === "no_account_found"
+                        ) {
+                            Log.d("AUTH", "No current account, interactive login required")
+                            if (mAttemptInteractiveSignIn) {
+                                doInteractiveSignIn()
+                            }
+                        } else {
+                            // Exception inside MSAL, more info inside MsalError.java
+                            Log.e("AUTH", "Client error authenticating", exception)
+                        }
+                    } else if (exception is MsalServiceException) {
+                        // Exception when communicating with the auth server, likely config issue
+                        Log.e("AUTH", "Service error authenticating", exception)
                     }
-                } else if (exception is MsalServiceException) {
-                    // Exception when communicating with the auth server, likely config issue
-                    Log.e("AUTH", "Service error authenticating", exception)
+                    hideProgressBar()
                 }
-                hideProgressBar()
-            }
 
-            override fun onCancel() {
-                // User canceled the authentication
-                Log.d("AUTH", "Authentication canceled")
-                hideProgressBar()
+                override fun onCancel() {
+                    // User canceled the authentication
+                    Log.d("AUTH", "Authentication canceled")
+                    hideProgressBar()
+                }
             }
-    }
 
     private fun getUserCallback() =
-        object : ICallback<User> {
-            override fun success(user: User) {
-                Log.d("AUTH", "User: " + user.displayName)
-                mUserName = user.displayName
-                mUserEmail = if (user.mail == null) user.userPrincipalName else user.mail
-                mUserTimeZone = user.mailboxSettings.timeZone
-                runOnUiThread {
-                    hideProgressBar()
-                    setSignedInState(true)
-                    openHomeFragment(mUserName)
+            object : ICallback<User> {
+                override fun success(user: User) {
+                    Log.d("AUTH", "User: " + user.displayName)
+                    mUserName = user.displayName
+                    mUserEmail = if (user.mail == null) user.userPrincipalName else user.mail
+                    mUserTimeZone = user.mailboxSettings.timeZone
+                    runOnUiThread {
+                        hideProgressBar()
+                        setSignedInState(true)
+                        openHomeFragment(mUserName)
+                    }
                 }
-            }
 
-            override fun failure(ex: ClientException) {
-                Log.e("AUTH", "Error getting /me", ex)
-                mUserName = "ERROR"
-                mUserEmail = "ERROR"
-                runOnUiThread {
-                    hideProgressBar()
-                    setSignedInState(true)
-                    openHomeFragment(mUserName)
+                override fun failure(ex: ClientException) {
+                    Log.e("AUTH", "Error getting /me", ex)
+                    mUserName = "ERROR"
+                    mUserEmail = "ERROR"
+                    runOnUiThread {
+                        hideProgressBar()
+                        setSignedInState(true)
+                        openHomeFragment(mUserName)
+                    }
                 }
             }
-    }
 
     companion object {
         private const val SAVED_IS_SIGNED_IN = "isSignedIn"
