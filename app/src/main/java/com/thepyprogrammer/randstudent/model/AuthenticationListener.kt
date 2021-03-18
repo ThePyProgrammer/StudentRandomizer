@@ -15,8 +15,8 @@ import com.thepyprogrammer.randstudent.R
 // Singleton class - the app only needs a single instance
 // of PublicClientApplication
 class AuthenticationHelper private constructor(
-    ctx: Context,
-    listener: IAuthenticationHelperCreatedListener
+        ctx: Context,
+        listener: IAuthenticationHelperCreatedListener
 ) {
     private var mPCA: ISingleAccountPublicClientApplication? = null
     private val mScopes = arrayOf("User.Read")
@@ -44,6 +44,7 @@ class AuthenticationHelper private constructor(
 
     companion object {
         private var INSTANCE: AuthenticationHelper? = null
+
         @Synchronized
         fun getInstance(ctx: Context, listener: IAuthenticationHelperCreatedListener) {
             if (INSTANCE == null) {
@@ -57,16 +58,16 @@ class AuthenticationHelper private constructor(
 
     init {
         PublicClientApplication.createSingleAccountPublicClientApplication(ctx, R.raw.msal_config,
-            object : ISingleAccountApplicationCreatedListener {
-                override fun onCreated(application: ISingleAccountPublicClientApplication) {
-                    mPCA = application
-                    listener.onCreated(INSTANCE)
-                }
+                object : ISingleAccountApplicationCreatedListener {
+                    override fun onCreated(application: ISingleAccountPublicClientApplication) {
+                        mPCA = application
+                        listener.onCreated(INSTANCE)
+                    }
 
-                override fun onError(exception: MsalException) {
-                    Log.e("AUTHHELPER", "Error creating MSAL application", exception)
-                    listener.onError(exception)
-                }
-            })
+                    override fun onError(exception: MsalException) {
+                        Log.e("AUTHHELPER", "Error creating MSAL application", exception)
+                        listener.onError(exception)
+                    }
+                })
     }
 }
