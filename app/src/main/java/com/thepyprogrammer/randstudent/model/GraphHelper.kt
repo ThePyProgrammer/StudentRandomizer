@@ -26,7 +26,7 @@ class GraphHelper private constructor() : IAuthenticationProvider {
 
         // GET /me (logged in user)
         mClient!!.me().buildRequest()
-            .select("displayName,mail,mailboxSettings,userPrincipalName")[callback]
+                .select("displayName,mail,mailboxSettings,userPrincipalName")[callback]
     }
 
     companion object {
@@ -44,6 +44,6 @@ class GraphHelper private constructor() : IAuthenticationProvider {
 
     init {
         mClient = GraphServiceClient.builder()
-            .authenticationProvider(this).buildClient()
+                .authenticationProvider(this).buildClient()
     }
 }
