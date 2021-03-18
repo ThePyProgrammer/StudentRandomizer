@@ -119,7 +119,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
     }
 
-    fun showProgressBar() {
+    private fun showProgressBar() {
         val container = findViewById<FrameLayout>(R.id.fragment_container)
         val progressBar = findViewById<ProgressBar>(R.id.progressbar)
         container.visibility = View.GONE
