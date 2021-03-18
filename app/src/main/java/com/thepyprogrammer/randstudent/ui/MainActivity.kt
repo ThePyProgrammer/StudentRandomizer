@@ -26,6 +26,7 @@ import com.thepyprogrammer.randstudent.R
 import com.thepyprogrammer.randstudent.model.AuthenticationHelper
 import com.thepyprogrammer.randstudent.model.GraphHelper
 import com.thepyprogrammer.randstudent.model.IAuthenticationHelperCreatedListener
+import com.thepyprogrammer.randstudent.ui.home.HomeFragment
 
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
@@ -66,7 +67,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         mNavigationView?.setNavigationItemSelectedListener(this)
         if (savedInstanceState == null) {
             // Load the home fragment by default on startup
-            // openHomeFragment(mUserName)
+            openHomeFragment(mUserName)
         } else {
             // Restore state
             mIsSignedIn = savedInstanceState.getBoolean(SAVED_IS_SIGNED_IN)
@@ -143,8 +144,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             menu.removeItem(R.id.nav_signin)
         } else {
             menu.removeItem(R.id.nav_home)
-            menu.removeItem(R.id.nav_calendar)
-            menu.removeItem(R.id.nav_create_event)
             menu.removeItem(R.id.nav_signout)
         }
 
@@ -165,6 +164,15 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
     }
 
+    // Load the "Home" fragment
+    fun openHomeFragment(userName: String?) {
+        val fragment = HomeFragment.createInstance(userName)
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.fragment_container, fragment)
+            .commit()
+        mNavigationView?.setCheckedItem(R.id.nav_home)
+    }
+
     private fun signIn() {
         showProgressBar()
         // Attempt silent sign in first
@@ -176,7 +184,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     private fun signOut() {
         mAuthHelper!!.signOut()
         setSignedInState(false)
-        // openHomeFragment(mUserName)
+        openHomeFragment(mUserName)
     }
 
     // Silently sign in - used if there is already a
@@ -250,7 +258,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 runOnUiThread {
                     hideProgressBar()
                     setSignedInState(true)
-                    // openHomeFragment(mUserName)
+                    openHomeFragment(mUserName)
                 }
             }
 
@@ -261,7 +269,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 runOnUiThread {
                     hideProgressBar()
                     setSignedInState(true)
-                    // openHomeFragment(mUserName)
+                    openHomeFragment(mUserName)
                 }
             }
     }
