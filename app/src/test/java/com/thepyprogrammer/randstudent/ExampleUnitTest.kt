@@ -1,4 +1,4 @@
-package com.thepyprogrammer.studentrandomizer
+package com.thepyprogrammer.randstudent
 
 import org.junit.Test
 

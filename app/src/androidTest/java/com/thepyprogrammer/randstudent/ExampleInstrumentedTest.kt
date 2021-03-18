@@ -1,4 +1,4 @@
-package com.thepyprogrammer.studentrandomizer
+package com.thepyprogrammer.randstudent
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4
