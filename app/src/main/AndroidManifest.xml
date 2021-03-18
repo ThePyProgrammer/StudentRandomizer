@@ -15,7 +15,6 @@
         android:theme="@style/Theme.StudentRandomizer">
         <activity
             android:name="com.thepyprogrammer.randstudent.ui.MainActivity"
-            android:label="@string/title_activity_main"
             android:theme="@style/Theme.StudentRandomizer">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
