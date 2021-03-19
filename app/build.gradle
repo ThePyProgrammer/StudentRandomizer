@@ -54,6 +54,7 @@ dependencies {
     implementation 'androidx.navigation:navigation-ui-ktx:2.3.4'
 
     implementation 'com.squareup:seismic:1.0.2'
+    implementation 'com.google.code.gson:gson:2.8.6'
 
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
