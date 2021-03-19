@@ -4,7 +4,7 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 
 class SwipeToDeleteCallback(
-    val adapter: RecyclerView.Adapter,
+    val adapter: ListAdapter,
     dragDirs: Int = 0,
     swipeDirs: Int = ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT): ItemTouchHelper.SimpleCallback(dragDirs, swipeDirs) {
 
