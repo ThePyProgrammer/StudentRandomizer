@@ -10,6 +10,7 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.squareup.seismic.ShakeDetector
 import com.thepyprogrammer.randstudent.R
 
@@ -39,6 +40,10 @@ class AppMainActivity : AppCompatActivity(), ShakeDetector.Listener {
             setupWithNavController(navController)
             menu.getItem(1).isEnabled = false
             background = null
+        }
+
+        findViewById<FloatingActionButton>(R.id.fab).setOnClickListener {
+
         }
     }
 
