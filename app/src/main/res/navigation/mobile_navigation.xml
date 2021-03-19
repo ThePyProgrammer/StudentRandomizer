@@ -5,7 +5,6 @@
     android:id="@+id/mobile_navigation"
     app:startDestination="@+id/homeFragment">
 
-
     <fragment
         android:id="@+id/dashboardFragment"
         android:name="com.thepyprogrammer.randstudent.ui.dashboard.DashboardFragment"
