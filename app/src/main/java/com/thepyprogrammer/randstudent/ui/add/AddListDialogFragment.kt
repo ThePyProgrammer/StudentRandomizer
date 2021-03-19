@@ -17,7 +17,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.thepyprogrammer.randstudent.R
 import java.time.LocalDate
 
-open class AddDialogFragment : DialogFragment() {
+open class AddListDialogFragment : DialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val builder = AlertDialog.Builder(activity)
