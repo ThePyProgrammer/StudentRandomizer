@@ -24,7 +24,7 @@ open class AddListDialogFragment : DialogFragment() {
         builder.setTitle("Create List")
         // set the custom layout
         val customLayout: View = LayoutInflater.from(activity?.applicationContext).inflate(
-            R.layout.expanded_item_todo,
+            R.layout.expanded_item_list,
             null
         )
         builder.setView(customLayout)
